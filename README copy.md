@@ -28,29 +28,29 @@ Load balancing ensures that the application will be highly reliable, in addition
 - The load balancer protects the **availability** aspect of security. The off-loading function of a load balancer defends against distributed denial of service (DDoS) attacks. 
 - The jump box is a secure device that alla dmins first connect to before launching any administrative task. It is an origin point used to connect to other servers or untrusted environments, like the internet.
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the network traffic and system logs.
-- Filebeat monitors the log files or locations that you specify, collects log events and forwards them to Elasticsearch or Logstash for indexing.
-- Metricbeat collects system-level CPU usage, memory, file system, disk IO, and network IO statistics,  as well as top-like statistics for every process running on your systems.
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
+- _TODO: What does Filebeat watch for?_
+- _TODO: What does Metricbeat record?_
 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
-| Name              | Function           | IP Address | Operating System |
-|-------------------|--------------------|------------|------------------|
-| Jump Box          | Gateway            | 10.0.0.4   | Linux            |
-| Web-1             | Application        | 10.0.0.5   | Linux            |
-| Web-2             | Application        | 10.0.0.7   | Linux            |
-| ELKVirtualMachine | Logging/Monitoring | 10.1.0.4   | Linux            |
+| Name     | Function | IP Address | Operating System |
+|----------|----------|------------|------------------|
+| Jump Box | Gateway  | 10.0.0.1   | Linux            |
+| TODO     |          |            |                  |
+| TODO     |          |            |                  |
+| TODO     |          |            |                  |
 
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- 76.69.119.191
+Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+- _TODO: Add whitelisted IP addresses_
 
-Machines within the network can only be accessed by Jump Box.
-- 10.1.0.4
+Machines within the network can only be accessed by _____.
+- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
 
 A summary of the access policies in place can be found in the table below.
 
