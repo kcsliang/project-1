@@ -101,17 +101,19 @@ SSH into the control node and follow the steps below:
 - Copy the filebeat-config.yml file to /etc/ansible/files.
 - Update the filebeat-config.yml file:
 - At line 1106:
-```
-hosts: ["10.1.0.4:9200"]
-username: "elastic"
-password: "changeme" 
-```
 
-![line-1106](Images/line-1106.png)
+  ```
+  hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme" 
+  ```
+
 - At line 1806:
-  - host: "10.1.0.4:5601"
 
-![line-1806](Images/line-1806.png)
+  ```
+  host: "10.1.0.4:5601"
+  ```
+
 - Run the playbook, and navigate to Kibana via ELK-VM Public IP to check that the installation worked as expected.
   - Navigate to Kibana
   - Click "Add log data"
