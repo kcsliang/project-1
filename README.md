@@ -4,12 +4,12 @@ The files in this repository were used to configure the network depicted below.
 
 ![/Project_1_Diagram](Images/KELVINLIANG_Project_1_Diagram.png)
 
-
-TEST 
-
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the .yml file may be used to install only certain pieces of it, such as Filebeat.
 
-  - [GitHub](http://github.com)filebeat-config.yml
+  - [ELK](https://github.com/kcsliang/project-1/blob/main/yml-files/elk.yml)
+  - [DVWA](https://github.com/kcsliang/project-1/blob/main/yml-files/dvwa.yml)
+  - [Filebeat](https://github.com/kcsliang/project-1/blob/main/yml-files/filebeat.yml)
+  - [Metricbeat](https://github.com/kcsliang/project-1/blob/main/yml-files/metricbeat.yml)
 
 This document contains the following details:
 - Description of the Topology
@@ -26,14 +26,13 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 
 Load balancing ensures that the application will be highly reliable, in addition to restricting access to the network.
 - The load balancer protects the **availability** aspect of security. The off-loading function of a load balancer defends against distributed denial of service (DDoS) attacks. 
-- The jump box is a secure device that alla dmins first connect to before launching any administrative task. It is an origin point used to connect to other servers or untrusted environments, like the internet.
+- The jump box is a secure device that all admins first connect to before launching any administrative task. It is an origin point used to connect to other servers or untrusted environments, like the internet.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the network traffic and system logs.
 - Filebeat monitors the log files or locations that you specify, collects log events and forwards them to Elasticsearch or Logstash for indexing.
 - Metricbeat collects system-level CPU usage, memory, file system, disk IO, and network IO statistics,  as well as top-like statistics for every process running on your systems.
 
 The configuration details of each machine may be found below.
-_Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
 | Name              | Function           | IP Address | Operating System |
 |-------------------|--------------------|------------|------------------|
@@ -54,43 +53,72 @@ Machines within the network can only be accessed by Jump Box.
 
 A summary of the access policies in place can be found in the table below.
 
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.5 10.0.0.7    |
-|          |                     |                      |
-|          |                     |                      |
+| Name          | Publicly Accessible | Allowed IP Address       |
+|---------------|---------------------|--------------------------|
+| Jump Box      | Yes                 | 76.69.119.191            |
+| Web-1         | No                  | 10.0.0.4                 |
+| Web-2         | No                  | 10.0.0.4                 |
+| Load Balancer | Yes                 | 76.69.119.191            |
+| ELK Server    | Yes                 | 10.0.0.4 / 76.69.119.191 |
+
+
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually; this is advantageous because it allows us to setup highly complex IT workflows. You can customize it based on your needs.
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
 
-The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
+- Install Docker.io
+- Install Python pip3
+- Install PythonDocker Python Module
+- Install Increase Virtual Memory
+- Download and Launch a Docker ELK Container
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+
+The following screenshot displays the result of running `docker ps -a` after successfully configuring the ELK instance.
+
+![Docker ps -a Screenshot](Images/docker-ps-a.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+- 10.0.0.5 (Web-1) 
+- 10.0.0.7 (Web-2)
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+- Filebeat
+- Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+- Filebeat collects network related logs, which is used to track information like unique visitors.
+- Metricbeat collects system related logs, which is used to track information like CPU usage and memory usage.
+
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Copy the filebeat-config.yml file to /etc/ansible/files.
+- Update the filebeat-config.yml file:
+- At line 1106:
+  - hosts: ["10.1.0.4:9200"]
+  - username: "elastic"
+  - password: "changeme" 
+
+![line-1106](Images/line-1106.png)
+- At line 1806:
+  - host: "10.1.0.4:5601"
+
+![line-1806](Images/line-1806.png)
+- Run the playbook, and navigate to Kibana via ELK-VM Public IP to check that the installation worked as expected.
+  - Navigate to Kibana
+  - Click "Add log data"
+  - Click "System logs"
+  - Click "Check data" at the bottom
+
+This is what you should see if successful.
+
+![filebeat-module-status](Images/filebeat-module-status.png)
 
 _TODO: Answer the following questions to fill in the blanks:_
 - _Which file is the playbook? Where do you copy it?_
