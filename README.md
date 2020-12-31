@@ -98,9 +98,35 @@ These Beats allow us to collect the following information from each machine:
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the filebeat-config.yml file to /etc/ansible/files.
-- Update the filebeat-config.yml file:
-- At line 1106:
+
+- Navigate to the /etc/ansible directory.
+  ```
+  cd /etc/ansible
+  ```
+- Copy the [filebeat-config.yml](https://github.com/kcsliang/project-1/blob/main/yml-files/filebeat-config.yml) file to /etc/ansible/files.
+  ```
+  curl https://github.com/kcsliang/project-1/blob/main/yml-files/filebeat-config.yml > /etc/ansible/files/filebeat-config.yml
+  ```
+- Using `nano`, update the *hosts* files in /etc/ansible to include: 
+  - Note: Names of Virtual Machines must correspond with the hosts in the .yml file.
+  - This is how you will specify which machine to install the ELK server on versus which to install Filebeat on. 
+
+  ```
+  [webservers]
+  10.0.0.5 ansible_python_interpreter=/usr/bin/python3
+  10.0.0.7 ansible_python_interpreter=/usr/bin/python3
+  
+  [elk]
+  10.1.0.4 ansible_python_interpreter=/usr/bin/python3
+  ```
+
+- Update the *ansible.cfg* to include:
+  - Note: ansible.cfg is a User config file, which overrides the default config if present.
+  ```
+  remote_user = ansible
+  ```
+- Update the *filebeat-config.yml* file to include:
+  - At line 1106:
 
   ```
   hosts: ["10.1.0.4:9200"]
@@ -108,24 +134,21 @@ SSH into the control node and follow the steps below:
   password: "changeme" 
   ```
 
-- At line 1806:
+  - At line 1806:
 
   ```
   host: "10.1.0.4:5601"
   ```
 
-- Run the playbook, and navigate to Kibana via ELK-VM Public IP to check that the installation worked as expected.
-  - Navigate to Kibana
+- Run the playbook
+  ```
+  ansible-playbook /etc/ansible/elk.yml
+  ```
+- Navigate to http://20.185.176.254:5601/ to check that the installation worked as expected.
   - Click "Add log data"
   - Click "System logs"
   - Click "Check data" at the bottom
 
-This is what you should see if successful.
+    - This is what you should see if successful.
 
 ![filebeat-module-status](Images/filebeat-module-status.png)
-
-- Any file that has a .yml extension may be used for the playbook. You may copy it from anywhere, but the destination must be in the /etc/ansible/ folder.
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
-
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
