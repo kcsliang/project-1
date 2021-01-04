@@ -49,7 +49,7 @@ Only the Jump Box machine can accept connections from the Internet. Access to th
 - 76.69.119.191
 
 Machines within the network can only be accessed by Jump Box.
-- IP of Jump Box: 10.1.0.4
+- IP of Jump Box: 10.0.0.4
 
 A summary of the access policies in place can be found in the table below.
 
